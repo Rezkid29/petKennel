@@ -1,14 +1,14 @@
 export const initialData = [
   {
-    id: 1,
-    name: "Baby Yoda",
-    status: "Hungry",
-    image: "https://some-url.com/sad-yoda.jpg"
+    id: 2,
+    name: "Happy Pup",
+    status: "Sleepy",
+    image: "/images/sad-dog.png"
   },
   {
-    id: 2,
-    name: "Mandalorian",
-    status: "Lost",
-    image: "https://some-url.com/lost-mando.jpg"
+    id: 3,
+    name: "Grumpy Gorilla",
+    status: "Grumpy",
+    image: "/images/sad-gorilla.png"
   }
 ];

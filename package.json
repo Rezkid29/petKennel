@@ -1,13 +1,20 @@
 {
-  "name": "package.json",
+  "name": "pet-kennel-manager",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "docker:dev": "docker-compose up dev",
+    "docker:dev:build": "docker-compose up --build dev",
+    "docker:prod": "docker-compose up prod",
+    "docker:prod:build": "docker-compose up --build prod",
+    "docker:down": "docker-compose down",
+    "docker:clean": "docker-compose down -v && docker rmi petkennel-dev petkennel-prod 2>/dev/null || true",
+    "docker:test": "./test-docker.sh"
   },
   "dependencies": {
     "react": "^19.2.0",

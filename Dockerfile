@@ -1,19 +1,25 @@
-# Use Node 18 Alpine
-FROM node:18-alpine
+# Multi-stage build for React Vite app
 
+# Development stage
+FROM node:20-alpine AS development
 WORKDIR /app
-
-# Install dependencies
-COPY package.json package-lock.json* ./
+COPY package*.json ./
 RUN npm install
-
-# Copy source code
 COPY . .
+EXPOSE 5173
+CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
 
-# EXPLAINED: We expose 3000 to match the assignment requirements
-EXPOSE 3000
+# Build stage
+FROM node:20-alpine AS build
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+RUN npm run build
 
-# IMPORTANT: 
-# --host 0.0.0.0 allows access from outside the container
-# --port 3000 forces Vite to use your requested port instead of 5173
-CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0", "--port", "3000"]
+# Production stage
+FROM nginx:alpine AS production
+COPY --from=build /app/dist /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]

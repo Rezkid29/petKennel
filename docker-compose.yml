@@ -1,0 +1,27 @@
+services:
+  # Development service with hot reload
+  dev:
+    build:
+      context: .
+      target: development
+    container_name: petkennel-dev
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./src:/app/src
+      - ./public:/app/public
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    stdin_open: true
+    tty: true
+
+  # Production service
+  prod:
+    build:
+      context: .
+      target: production
+    container_name: petkennel-prod
+    ports:
+      - "8080:80"
+    restart: unless-stopped
